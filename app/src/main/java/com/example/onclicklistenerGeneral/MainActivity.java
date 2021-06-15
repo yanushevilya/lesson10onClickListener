@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-// Присвоение одного обработчика на несколько кнопок
+// Activity как Обработчик
 
 //  Нам надо научить кнопку реагировать на нажатие.
 //  Соответственно для реализации необходимо выполнить следующие шаги:
@@ -20,7 +20,7 @@ import android.widget.TextView;
 // Можно создать отдельно такой объект, а можно сделать обработчиком слушателя саму Activity
 // для этого имплементируем OnClickListener в наш MainActivity
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView tvScreen;
     Button btnOk, btnCancel;
@@ -36,33 +36,23 @@ public class MainActivity extends AppCompatActivity {
 
 // +++++++++++++++++++++++++++++++++++++
 
-// СОЗДАЕМ ОБРАБОТЧИК
-        // Для установки слушателя у кнопки есть метод setOnClickListener (View.OnClickListener l).
-        // На вход подается объект с интерфейсом View.OnClickListener. ЗДЕСЬ МЫ СОЗДАДИМ ТАКОЙ ОБЪЕКТ.
-        // Именно этому объекту кнопка поручит обрабатывать нажатия.
-        View.OnClickListener onClickListenerBtn = new View.OnClickListener() {
-// ЗАПОЛНЯЕМ МЕТОД onClick
-        // На вход ему подается объект класса View, это как раз то, что нам нужно. Это View на
-        // которой произошло нажатие и которая вызвала обработчик. Т.е. в нашем случае это будет либо кнопка OK либо
-        // Cancel. Нам осталось узнать ID этой View и сравнить его с нашими R.id.btnOk и R.id.btnCancel, чтобы определить
-        // какая именно это кнопка. Чтобы получить ID какой-либо View, используется метод getId. Для перебора результатов
-        // используем java-оператор switch.
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.btnOk:
-                        tvScreen.setText("ButtonOK is press");
-                        break;
-                    case R.id.btnCancel:
-                        tvScreen.setText("ButtonCancel is press");
-                }
-
-            }
-        };
 // ПРИСВАИВАЕМ ОДИН И ТОТЖЕ ОБРАБОТЧИК ОБЕИМ КНОПКАМ:
         // Обработчик нажатия готов.
         // Осталось «скормить» его кнопке с помощью метода setOnClickListener.
-        btnOk.setOnClickListener(onClickListenerBtn);
-        btnCancel.setOnClickListener(onClickListenerBtn);                                                         //
+        btnOk.setOnClickListener(this::onClick);
+        btnCancel.setOnClickListener(this::onClick);                                                         //
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btnOk:
+                tvScreen.setText("ButtonOK is press");
+                break;
+            case R.id.btnCancel:
+                tvScreen.setText("ButtonCancel is press");
+        }
+    }
+
+// +++++++++++++++++++++++++++++++++++++
 }
