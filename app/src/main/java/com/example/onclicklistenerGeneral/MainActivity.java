@@ -3,6 +3,7 @@ package com.example.onclicklistenerGeneral;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,10 +21,14 @@ import android.widget.TextView;
 // Можно создать отдельно такой объект, а можно сделать обработчиком слушателя саму Activity
 // для этого имплементируем OnClickListener в наш MainActivity
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "myLogs";
 
     TextView tvScreen;
     Button btnOk, btnCancel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +40,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnCancel = findViewById(R.id.btnCancel);
 
 // +++++++++++++++++++++++++++++++++++++
-
-// ПРИСВАИВАЕМ ОДИН И ТОТЖЕ ОБРАБОТЧИК ОБЕИМ КНОПКАМ:
-        // Обработчик нажатия готов.
-        // Осталось «скормить» его кнопке с помощью метода setOnClickListener.
+    // передаем обработчик нажатия в метод setOnClickListener
+        Log.d(TAG, "передаем обработчик нажатия в метод setOnClickListener");
         btnOk.setOnClickListener(this::onClick);
         btnCancel.setOnClickListener(this::onClick);                                                         //
     }
 
+    // ПРИСВАИВАЕМ ОДИН И ТОТЖЕ ОБРАБОТЧИК ОБЕИМ КНОПКАМ:
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "перебираем переданные в обработчик View по их id");
         switch (v.getId()) {
             case R.id.btnOk:
                 tvScreen.setText("ButtonOK is press");
