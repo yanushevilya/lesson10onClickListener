@@ -1,4 +1,4 @@
-package com.example.onclicklistener;
+package com.example.onclicklistenerGeneral;
 
 import org.junit.Test;
 
